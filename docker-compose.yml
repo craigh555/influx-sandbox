@@ -87,7 +87,7 @@ services:
       - telegraf
 
   grafana:
-    # 
+    # Grafana 
     image: grafana/grafana
     links:
       # Grafana requires network access to InfluxDB
@@ -97,6 +97,18 @@ services:
       - "3000:3000"
     depends_on:
       - influxdb
+
+  alerta-db:
+    image: mongo
+
+  alerta-web:
+    image: alerta/alerta-web
+    environment:
+      - DATABASE_URL=mongodb://db:27017/monitoring
+    links:
+      - alerta-db:db
+    ports:
+      - "8080:8080"
 
   documentation:
     build:
