@@ -86,6 +86,18 @@ services:
       - influxdb
       - telegraf
 
+  grafana:
+    # 
+    image: grafana/grafana
+    links:
+      # Grafana requires network access to InfluxDB
+      - influxdb
+    ports:
+      # The WebUI for Grafana is served on port 3000
+      - "3000:3000"
+    depends_on:
+      - influxdb
+
   documentation:
     build:
       context: ./documentation
