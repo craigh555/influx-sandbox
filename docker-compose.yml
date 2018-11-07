@@ -88,13 +88,21 @@ services:
 
   grafana:
     # Grafana 
-    image: grafana/grafana
+    image: grafana/grafana:5.3.2
+    environment:
+      - GF_INSTALL_PLUGINS=natel-discrete-panel,https://github.com/ATNF/atnf-astroclock-panel/archive/0.0.4.zip;atnf-astroclock-panel,https://github.com/ATNF/atnf-tree-panel/archive/master.zip;atnf-tree-panel
+      - GF_SECURITY_ADMIN_PASSWORD=askap
     links:
       # Grafana requires network access to InfluxDB
       - influxdb
     ports:
       # The WebUI for Grafana is served on port 3000
       - "3000:3000"
+    volumes:
+      # Mount for kapacitor data directory
+      - ./grafana/data/:/var/lib/grafana
+      # Mount for kapacitor configuration
+      - ./grafana/provisioning/:/etc/grafana/provisioning
     depends_on:
       - influxdb
 
