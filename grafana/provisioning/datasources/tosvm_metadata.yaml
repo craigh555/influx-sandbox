@@ -1,10 +1,10 @@
 apiVersion: 1
 
 datasources:
-  - name: telegraf
+  - name: tosvm_metadata
     type: influxdb
     access: proxy
-    database: telegraf
+    database: tosvm_metadata
     user: grafana
     password: grafana
     url: http://influxdb:8086
