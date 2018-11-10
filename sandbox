@@ -82,12 +82,12 @@ sandbox () {
         open http://localhost:3010
         open http://localhost:8888
         open http://localhost:3000
-        open http://localhost:8080
+        open http://localhost:4000
       elif [ $(uname) == "Linux" ]; then
         sensible-browser http://localhost:8888
         sensible-browser http://localhost:3010
         sensible-browser http://localhost:3000
-        sensible-browser http://localhost:8080
+        sensible-browser http://localhost:4000
       else
         echo "no browser detected..."
       fi
