@@ -118,6 +118,12 @@ sandbox () {
       echo "Entering the influx cli..."
       docker-compose exec influxdb /usr/bin/influx
       ;;
+    resetdb)
+      curl -i -XPOST http://localhost:8086/query --data-urlencode "q=DROP DATABASE tosvm"
+      curl -i -XPOST http://localhost:8086/query --data-urlencode "q=DROP DATABASE tosvm_metadata"
+      curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE tosvm"
+      curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE tosvm_metadata"
+      ;;
     rebuild-docs)
       echo "Rebuilding documentation container..."
       docker build -t sandbox_documentation documentation/ > /dev/null 2>&1
@@ -145,6 +151,7 @@ sandbox commands:
   delete-data  -> delete all data created by the TICK Stack
   docker-clean -> stop and remove all running docker containers and images
   rebuild-docs -> rebuild the documentation image
+  resetdb      -> delete and recreate tosvm database
 EOF
       ;;
   esac
