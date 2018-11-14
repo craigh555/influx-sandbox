@@ -57,6 +57,7 @@ services:
     # Kapacitor requires network access to Influxdb
     links:
       - influxdb
+      - alerta-web:alerta
     ports:
       # The API for Kapacitor is served on port 9092
       - "9092:9092"
@@ -95,14 +96,15 @@ services:
     links:
       # Grafana requires network access to InfluxDB
       - influxdb
+      - alerta-web:alerta
     ports:
       # The WebUI for Grafana is served on port 3000
       - "3000:3000"
     volumes:
-      # Mount for kapacitor data directory
+      # Mount for grafana data directory
       - ./grafana/data/:/var/lib/grafana
-      # Mount for kapacitor configuration
-      - ./grafana/provisioning/:/etc/grafana/provisioning
+      # Mount for grafana configuration
+      - ./grafana/config/:/etc/grafana/
     depends_on:
       - influxdb
 
