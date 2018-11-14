@@ -1,6 +1,6 @@
-# ATNF DiaMoniCA
+## Fork
 
-## Configuration Alerta Webhook in Grafana
+This sandbox is based on https://github.com/influxdata/sandbox adding Grafana & Alerta to the Docker stack
 
 ## Configuring Alerta endpoint in Grafana
 
