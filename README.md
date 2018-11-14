@@ -4,10 +4,12 @@ This sandbox is based on https://github.com/influxdata/sandbox adding Grafana & 
 
 ## Configuring Alerta endpoint in Grafana
 
+```
 name:           alerta
 type:           webhook
 url:            http://alerta:8080/api/webhooks/grafana
 http method:    POST
+```
 
 # InfluxData Sandbox
 
