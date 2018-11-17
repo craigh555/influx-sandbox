@@ -1,5 +1,17 @@
 version: '3'
+volumes:
+  portainer_data:
+
 services:
+  portainer:
+    image: portainer/portainer
+    ports:
+      - "9000:9000"
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
   influxdb:
     # Full tag list: https://hub.docker.com/r/library/influxdb/tags/
     build:
@@ -125,3 +137,4 @@ services:
       context: ./documentation
     ports:
       - "3010:3000"
+
