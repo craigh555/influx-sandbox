@@ -131,6 +131,9 @@ services:
     image: alerta/alerta-web
     environment:
       - DATABASE_URL=mongodb://db:27017/monitoring
+      - ADMIN_USERS=admin@alerta.io,admin
+      - ADMIN_PASSWORD=sandbox
+      - AUTH_REQUIRED=False
       #- PLUGINS=mattermost
       #- INSTALL_PLUGINS=mattermost
       #- MATTERMOST_URL=https://chat.atnf.csiro.au/hooks/mhutjfpn53dxfg94hfj56y8tja

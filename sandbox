@@ -110,7 +110,7 @@ sandbox () {
         open http://localhost:3010
         open http://localhost:8888
         # wait for grafana
-        sleep 5
+        sleep 10
         open http://localhost:3000
         open http://localhost:4000
         open http://localhost:9000
@@ -138,7 +138,7 @@ sandbox () {
       echo "Services available!"
       ;;
     delete-data)
-      echo "deleting all influxdb, kapacitor and chronograf data..."
+      echo "deleting all influxdb, kapacitor, chronograf, grafana & alerta data..."
       rm -rf kapacitor/data influxdb/data chronograf/data grafana/data alerta/data 
       ;;
     docker-clean)
@@ -157,6 +157,7 @@ sandbox () {
       curl -i -XPOST http://localhost:8086/query --data-urlencode "q=DROP DATABASE tosvm_metadata"
       curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE tosvm"
       curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE tosvm_metadata"
+      ;;
     flux)
       echo "Entering the flux repl..."
       docker-compose exec influxdb /usr/bin/influx -type flux

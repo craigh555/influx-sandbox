@@ -1,0 +1,20 @@
+notifiers:
+  - name: alerta
+    type: webhook
+    uid: notifier1
+    org_name: Main Org.
+    is_default: true
+    send_reminder: false
+    frequency: 1h
+    disable_resolve_message: false
+    # See `Supported Settings` section for settings supporter for each
+    # alert notification type.
+    settings:
+      url: "http://alerta:8080/api/webhooks/grafana"
+      username: ""
+      password: ""
+
+delete_notifiers:
+  - name: alerta
+    uid: notifier1
+    org_name: Main Org.

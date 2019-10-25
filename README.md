@@ -5,16 +5,9 @@ This sandbox is forked from https://github.com/influxdata/sandbox to add Grafana
 username: admin
 password: sandbox
 
-## Configuring Alerta endpoint in Grafana
+## Grafana & Alerta http://localhost:3000
 
-to alert from Grafana to Alerta you will need to add the following Notification Channel
-
-```
-name:           alerta
-type:           webhook
-url:            http://alerta:8080/api/webhooks/grafana
-http method:    POST
-```
+Grafana is setup to send alerts to Alerta at http://localhost:4000
 
 # InfluxData Sandbox
 
