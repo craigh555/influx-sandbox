@@ -1,4 +1,4 @@
-## 
+## Fork
 
 This sandbox is forked from https://github.com/influxdata/sandbox to add Grafana, Alerta & Portainer to the stack 
 
@@ -9,10 +9,12 @@ password: sandbox
 
 to alert from Grafana to Alerta you will need to add the following Notification Channel
 
+```
 name:           alerta
 type:           webhook
 url:            http://alerta:8080/api/webhooks/grafana
 http method:    POST
+```
 
 # InfluxData Sandbox
 
