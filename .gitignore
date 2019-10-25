@@ -2,5 +2,4 @@ chronograf/data/
 influxdb/data/
 kapacitor/data/
 alerta/data
-grafana/data/plugins
-grafana/data/png
+grafana/data

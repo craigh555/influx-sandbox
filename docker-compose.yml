@@ -116,6 +116,7 @@ services:
     volumes:
       # Mount for grafana data directory
       - ./grafana/data/:/var/lib/grafana
+      - ./grafana/dashboards/:/var/lib/grafana/dashboards
       # Mount for grafana configuration
       - ./grafana/config/:/etc/grafana/
     depends_on:
