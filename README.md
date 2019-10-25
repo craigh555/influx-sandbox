@@ -1,8 +1,13 @@
-# ATNF DiaMoniCA
+## 
 
-## Configuration Alerta Webhook in Grafana
+This sandbox is forked from https://github.com/influxdata/sandbox to add Grafana, Alerta & Portainer to the stack 
+
+username: admin
+password: sandbox
 
 ## Configuring Alerta endpoint in Grafana
+
+to alert from Grafana to Alerta you will need to add the following Notification Channel
 
 name:           alerta
 type:           webhook
@@ -27,8 +32,8 @@ sandbox commands:
   restart      -> restart the sandbox
   influxdb     -> attach to the influx cli
 
-  enter (influxdb||kapacitor||chronograf||telegraf) -> enter the specified container
-  logs  (influxdb||kapacitor||chronograf||telegraf) -> stream logs for the specified container
+  enter (influxdb||kapacitor||chronograf||telegraf|alerta) -> enter the specified container
+  logs  (influxdb||kapacitor||chronograf||telegraf|alerta) -> stream logs for the specified container
 
   delete-data  -> delete all data created by the TICK Stack
   docker-clean -> stop and remove all running docker containers

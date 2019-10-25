@@ -44,11 +44,11 @@ sandbox () {
         docker-compose exec flux /bin/sh
         ;;
       alerta)
-        echo "Entering /bin/sh session in the chronograf container..."
+        echo "Entering /bin/sh session in the alerta container..."
         docker-compose exec alerta-web /bin/bash
         ;;
       grafana)
-        echo "Entering /bin/sh session in the chronograf container..."
+        echo "Entering /bin/sh session in the grafana container..."
         docker-compose exec grafana /bin/sh
         ;;
       *)
@@ -80,6 +80,10 @@ sandbox () {
         echo "Following the logs from the grafana container..."
         docker-compose logs -f grafana
         ;;
+      alerta)
+        echo "Following the logs from the alerta container..."
+        docker-compose logs -f alerta-web
+        ;;
       *)
         echo "sandbox logs (influxdb||chronograf||kapacitor||telegraf)"
         ;;
@@ -100,6 +104,7 @@ sandbox () {
         sleep 5
         open http://localhost:3000
         open http://localhost:4000
+        open http://localhost:9000
       elif [ $(uname) == "Linux" ]; then
         sensible-browser http://localhost:8888
         sensible-browser http://localhost:3010
@@ -107,6 +112,7 @@ sandbox () {
         sleep 5
         sensible-browser http://localhost:3000
         sensible-browser http://localhost:4000
+        #sensible-browser http://localhost:9000
       else
         echo "no browser detected..."
       fi
@@ -124,7 +130,7 @@ sandbox () {
       ;;
     delete-data)
       echo "deleting all influxdb, kapacitor and chronograf data..."
-      rm -rf kapacitor/data influxdb/data chronograf/data grafana/data alerta/data
+      rm -rf kapacitor/data influxdb/data chronograf/data grafana/data alerta/data 
       ;;
     docker-clean)
       echo "Stopping and removing running sandbox containers..."
