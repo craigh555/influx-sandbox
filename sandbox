@@ -1,14 +1,23 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -eo pipefail
 IFS=$'\n\t'
 
+if ! [ -x "$(command -v docker)" ]; then
+  echo 'Error: docker is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v docker-compose)" ]; then
+  echo 'Error: docker-compose is not installed.' >&2
+  exit 1
+fi
 # grafana api key
 # curl -H "Authorization: Bearer eyJrIjoiUFR2SlM3ckNyRWh1bE1wR3BDUDdqVTViN0hEa0NmSnkiLCJuIjoidGVzdCIsImlkIjoxfQ==" http://localhost:3000/api/dashboards/home
 
 sandbox () {
       if [ "$2" == "-nightly" ]; then
         source .env-nightlies
-        echo "Using nightlies...removing old ones."        
+        echo "Using nightlies...removing old ones."
         # If nightly images already exist, containers are stopped, destroyed,
         # and rebuilt using newly pulled images
         if [ $(docker images | grep nightly | tr -s ' ' | cut -d ' ' -f 3 | wc -l) -gt 0 ]; then
@@ -52,7 +61,7 @@ sandbox () {
         docker-compose exec grafana /bin/sh
         ;;
       *)
-        echo "sandbox enter (influxdb||chronograf||kapacitor||telegraf||flux)"
+        echo "sandbox enter (influxdb||chronograf||kapacitor||telegraf)"
         ;;
     esac
   }
@@ -106,13 +115,13 @@ sandbox () {
         open http://localhost:4000
         open http://localhost:9000
       elif [ $(uname) == "Linux" ]; then
-        sensible-browser http://localhost:8888
-        sensible-browser http://localhost:3010
+        xdg-open http://localhost:8888
+        xdg-openhttp://localhost:3010
         # wait for grafana
         sleep 5
-        sensible-browser http://localhost:3000
-        sensible-browser http://localhost:4000
-        #sensible-browser http://localhost:9000
+        xdg-open http://localhost:3000
+        xdg-open http://localhost:4000
+        xdg-open http://localhost:9000
       else
         echo "no browser detected..."
       fi
@@ -148,6 +157,9 @@ sandbox () {
       curl -i -XPOST http://localhost:8086/query --data-urlencode "q=DROP DATABASE tosvm_metadata"
       curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE tosvm"
       curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE tosvm_metadata"
+    flux)
+      echo "Entering the flux repl..."
+      docker-compose exec influxdb /usr/bin/influx -type flux
       ;;
     rebuild-docs)
       echo "Rebuilding documentation container..."
@@ -169,6 +181,7 @@ sandbox commands:
   down               -> tear down the sandbox environment (latest or nightlies specified in the companion file)
   restart (-nightly) -> restart the sandbox
   influxdb           -> attach to the influx cli
+  flux               -> attach to the flux REPL
 
   enter (influxdb||kapacitor||chronograf||telegraf) -> enter the specified container
   logs  (influxdb||kapacitor||chronograf||telegraf) -> stream logs for the specified container
@@ -182,4 +195,6 @@ EOF
   esac
 }
 
-sandbox $@
+pushd `dirname $0` > /dev/null
+    sandbox $@
+popd > /dev/null
