@@ -2,6 +2,9 @@ version: '3'
 volumes:
   portainer_data:
 
+networks:
+    loki:
+
 services:
   portainer:
     image: portainer/portainer
@@ -121,6 +124,17 @@ services:
       - ./grafana/config/:/etc/grafana/
     depends_on:
       - influxdb
+    networks:
+      - loki
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+
 
   alerta-db:
     image: mongo
